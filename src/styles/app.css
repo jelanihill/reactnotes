@@ -17,3 +17,22 @@
 .ppp-intro {
   font-size: large;
 }
+
+/*.row {
+  background-color: blue;
+}*/
+
+#row {
+  background-color: red;
+  height: 95vh;
+}
+
+/*#sidebar {
+  background-color: green;
+  height: 100%;
+}
+
+#taskviewer {
+  background-color: blue;
+  height: 100%;
+}*/
