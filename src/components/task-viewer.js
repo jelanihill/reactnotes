@@ -13,8 +13,10 @@ const TaskViewer = props => (
   </Col>
 );
 
-TaskViewer.PropTypes = {
-  taskList: PropTypes.array,
+TaskViewer.propTypes = {
+  taskList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  addNewTask: PropTypes.func.isRequired,
+  onDeleteTask: PropTypes.func.isRequired,
 };
 
 export default TaskViewer;

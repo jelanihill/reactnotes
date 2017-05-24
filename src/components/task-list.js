@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Task from './task';
 import '../styles/task-list.css';
@@ -15,5 +16,10 @@ const TaskList = ({ taskList, onDeleteTask }) => (
     ))}
   </ul>
 );
+
+TaskList.propTypes = {
+  taskList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onDeleteTask: PropTypes.func.isRequired,
+};
 
 export default TaskList;

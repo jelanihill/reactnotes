@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Button, Form, FormGroup, FormControl } from 'react-bootstrap';
 
 import '../styles/task-adder.css';
@@ -40,5 +41,9 @@ class TaskAdder extends Component {
     );
   }
 }
+
+TaskAdder.propTypes = {
+  addNewTask: PropTypes.func.isRequired,
+};
 
 export default TaskAdder;

@@ -11,21 +11,31 @@ const taskList = [
   { id: 2, key: 2, content: 'This is the content of the second sticky task' },
 ];
 
+const categoryList = ['groceries', 'movies'];
+
 class App extends Component {
 
   constructor(props) {
     super(props);
 
-    this.state = { taskList, textValue: '' };
+    this.state = { taskList, categoryList };
 
+    // taskViewer Events
     this.addNewTask = this.addNewTask.bind(this);
     this.onDeleteTask = this.onDeleteTask.bind(this);
+
+    // sidebar events
+    this.onAddNewCategory = this.onAddNewCategory.bind(this);
   }
 
   onDeleteTask(id) {
     const newList = this.state.taskList.filter(task => task.id !== id);
-    console.log(newList);
+    // console.log(newList);
     this.setState({ taskList: newList });
+  }
+
+  onAddNewCategory(stringVal) {
+    this.setState({ categoryList: this.state.categoryList.concat([stringVal]) });
   }
 
   addNewTask(newVal) {
@@ -40,7 +50,10 @@ class App extends Component {
         <Header />
         <Grid fluid>
           <Row id="row">
-            <SideBar />
+            <SideBar
+              categoryList={this.state.categoryList}
+              onAddNewCategory={this.onAddNewCategory}
+            />
             <TaskViewer
               taskList={this.state.taskList}
               addNewTask={this.addNewTask}
