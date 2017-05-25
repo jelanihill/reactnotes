@@ -1,3 +1,7 @@
 #taskviewer {
   height: 100%;
 }
+
+#task-adder {
+  margin-top: 10px;
+}

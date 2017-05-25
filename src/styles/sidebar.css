@@ -2,3 +2,7 @@
   background-color: grey;
   height: 100%;
 }
+
+#create-category-button {
+  margin-top: 5px;
+}

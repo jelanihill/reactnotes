@@ -25,14 +25,19 @@ class SideBar extends Component {
   }
 
   render() {
-    const { categoryList, onAddNewCategory } = this.props;
+    const { categoryList, onAddNewCategory, selectedCategory, onSwitchCategory } = this.props;
 
     return (
       <Col id="sidebar" xs={3} md={2} lgOffset={500} mdOffset={500}>
         {categoryList.map(category => (
-          <SideBarItem name={category} />
+          <SideBarItem
+            name={category.name}
+            isActive={selectedCategory === category.name}
+            onSwitchCategory={onSwitchCategory}
+          />
         ))}
         <Button
+          id="create-category-button"
           bsStyle="primary"
           onClick={this.openModal}
         >
@@ -72,8 +77,10 @@ class SideBar extends Component {
 }
 
 SideBar.propTypes = {
-  categoryList: PropTypes.arrayOf(PropTypes.string).isRequired,
+  categoryList: PropTypes.arrayOf(PropTypes.object).isRequired,
   onAddNewCategory: PropTypes.func.isRequired,
+  selectedCategory: PropTypes.string.isRequired,
+  onSwitchCategory: PropTypes.func.isRequired,
 };
 
 export default SideBar;

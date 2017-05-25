@@ -16,7 +16,7 @@ class TaskAdder extends Component {
     const { addNewTask } = this.props;
 
     return (
-      <div>
+      <div id="task-adder">
         <Button
           bsStyle="primary"
           onClick={() => {

@@ -6,19 +6,28 @@ import SideBar from './components/sidebar';
 import TaskViewer from './components/task-viewer';
 import './styles/app.css';
 
-const taskList = [
-  { id: 1, key: 1, content: 'This is the content of the first sticky task' },
-  { id: 2, key: 2, content: 'This is the content of the second sticky task' },
+const groceryTaskList = [
+  { id: 1, key: 1, content: 'Buy 10 gallons of milk' },
+  { id: 2, key: 2, content: 'eggs' },
+  { id: 3, key: 3, content: '10 stacks of bacon' },
 ];
 
-const categoryList = ['groceries', 'movies'];
+const movieTaskList = [
+  { id: 1, key: 1, content: 'Marathon all the Lord of the Rings movies' },
+  { id: 2, key: 2, content: 'Watch Inception' },
+];
+
+const categoryList = [
+  { name: 'Groceries', taskList: groceryTaskList },
+  { name: 'Movies', taskList: movieTaskList },
+];
 
 class App extends Component {
 
   constructor(props) {
     super(props);
 
-    this.state = { taskList, categoryList };
+    this.state = { selectedList: categoryList[0].taskList, categoryList, selectedCategory: '' };
 
     // taskViewer Events
     this.addNewTask = this.addNewTask.bind(this);
@@ -26,22 +35,50 @@ class App extends Component {
 
     // sidebar events
     this.onAddNewCategory = this.onAddNewCategory.bind(this);
+    this.onSwitchCategory = this.onSwitchCategory.bind(this);
+  }
+
+  componentWillMount() {
+    this.setState({
+      selectedCategory: this.state.categoryList[0].name,
+    });
+  }
+
+  onSwitchCategory(name) {
+    const newCatList = this.state.categoryList.filter(category => category.name === name);
+
+    this.setState({
+      selectedCategory: name,
+      selectedList: newCatList[0].taskList,
+    });
   }
 
   onDeleteTask(id) {
-    const newList = this.state.taskList.filter(task => task.id !== id);
-    // console.log(newList);
-    this.setState({ taskList: newList });
+    const newList = this.state.selectedList.filter(task => task.id !== id);
+    this.setState({ selectedList: newList });
   }
 
   onAddNewCategory(stringVal) {
-    this.setState({ categoryList: this.state.categoryList.concat([stringVal]) });
+    this.setState({
+      categoryList: this.state.categoryList
+        .concat([{ name: stringVal, taskList: [] }]),
+    });
+  }
+
+  saveList() {
+    const index = this.state.categoryList.findIndex(category => category.name === this.state.selectedCategory);
+    const updatedCategoryList = this.state.categoryList;
+    updatedCategoryList.splice(index, 1, { name: this.state.selectedCategory, taskList: this.state.selectedList });
+
+    this.setState({
+      categoryList: updatedCategoryList,
+    });
   }
 
   addNewTask(newVal) {
-    const newId = this.state.taskList[this.state.taskList.length - 1].id + 1;
+    const newId = this.state.selectedList[this.state.selectedList.length - 1].id + 1;
     const newTask = { id: newId, key: newId, content: newVal };
-    this.setState({ taskList: this.state.taskList.concat([newTask]) });
+    this.setState({ selectedList: this.state.selectedList.concat([newTask]) }, () => this.saveList());
   }
 
   render() {
@@ -53,9 +90,11 @@ class App extends Component {
             <SideBar
               categoryList={this.state.categoryList}
               onAddNewCategory={this.onAddNewCategory}
+              selectedCategory={this.state.selectedCategory}
+              onSwitchCategory={this.onSwitchCategory}
             />
             <TaskViewer
-              taskList={this.state.taskList}
+              taskList={this.state.selectedList}
               addNewTask={this.addNewTask}
               onDeleteTask={this.onDeleteTask}
             />
