@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'react-bootstrap';
+import DeleteButton from './delete-button';
 
 const Task = ({ content, id, onDeleteTask }) => (
-  <div>
-    <div>{content}</div>
-    <Button
-      bsStyle="danger"
-      onClick={() => onDeleteTask(id)}
-    >Delete</Button>
+  <div className="task">
+    {content}
+    <DeleteButton onDeleteItem={onDeleteTask} id={id} />
   </div>
 );
 

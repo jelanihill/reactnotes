@@ -5,3 +5,7 @@
   border: 3px solid grey;
   height: 60vh;
 }
+
+.task {
+  height: 50%;
+}
